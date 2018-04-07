@@ -47,15 +47,20 @@ module Conway
       }.flatten.uniq
     end
 
+    def lives_next_tick?(location)
+      ( has_cell_at?(location) &&
+        count_neighbors_at(location) == 2) ||
+      count_neighbors_at(location) == 3
+    end
+
     def tick
-      World.new(
-        candidate_locations.select{ |location|
-          ( has_cell_at?(location) &&
-            count_neighbors_at(location) == 2) ||
-          count_neighbors_at(location) == 3
-        }.map{ |location|
-          LiveCell.at(location)
-        }.uniq)
+      new_locations = candidate_locations.select{ |location|
+          lives_next_tick?(location)
+      }.uniq
+      cells = new_locations.map{ |location|
+        LiveCell.at(location)
+      }
+      World.new(cells)
     end
   end
 
