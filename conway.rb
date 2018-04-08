@@ -10,14 +10,17 @@ ARGF.each_line do |line|
 end
 
 world = Conway::World.from_coordinate_list(coordinates)
+generation = 0
 
 begin
   loop do
     rows, columns = TermInfo.screen_size
-    display = Conway::AsciiDisplay.render(world, rows-1, columns-1)
+    display = Conway::AsciiDisplay.render(world, rows-2, columns-1)
     puts %x{clear}
     puts display
+    puts "generation #{generation}"
     sleep(0.1)
+    generation += 1
     world = world.tick
   end
 rescue SystemExit, Interrupt
