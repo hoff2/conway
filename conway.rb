@@ -14,9 +14,9 @@ world = Conway::World.from_coordinate_list(coordinates)
 
 loop do
   rows, columns = TermInfo.screen_size
+  display = Conway::AsciiDisplay.render(world, rows-1, columns-1)
   puts %x{clear}
-  puts Conway::AsciiDisplay.render(world, rows-1, columns-1)
-  sleep(0.1)
+  puts display
   world = world.tick
 end
 
