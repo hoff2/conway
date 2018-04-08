@@ -5,13 +5,12 @@ require 'terminfo'
 require './lib/world.rb'
 require './lib/ascii_display.rb'
 
-world = Conway::World.from_coordinate_list(
-  [ [0, 1],
-    [1, 0],
-    [-1, -1],
-    [0, -1],
-    [1, -1],
-  ])
+coordinates = []
+ARGF.each_line do |line|
+  coordinates << line.split(',').map(&:to_i)
+end
+
+world = Conway::World.from_coordinate_list(coordinates)
 
 loop do
   rows, columns = TermInfo.screen_size
