@@ -10,7 +10,7 @@ module Conway
           if world.has_cell_at?(Location.new(x, y))
             'O'
           else
-            '.'
+            ' '
           end
         }.join
       }.join("\n")
