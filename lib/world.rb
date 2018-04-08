@@ -23,7 +23,7 @@ module Conway
 
     def add_cell(cell)
       unless has_cell_at?(cell.location)
-        @cells[cell.location.to_array] << cell
+        @cells[cell.location.to_array] = cell
       end
       self
     end
@@ -57,7 +57,7 @@ module Conway
     end
 
     def candidate_locations
-      @cells.map{ |cell|
+      @cells.values.map{ |cell|
         neighborhood_of(cell.location) + [cell.location]
       }.flatten.uniq{ |loc| loc.to_array }
     end
