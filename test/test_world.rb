@@ -1,7 +1,5 @@
 require 'minitest/autorun'
 require 'minitest/spec'
-require 'awesome_print'
-
 require './lib/world.rb'
 
 class TestWorld < Minitest::Test

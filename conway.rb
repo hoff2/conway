@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'terminfo'
-
 require './lib/world.rb'
 require './lib/ascii_display.rb'
 
@@ -12,12 +11,18 @@ end
 
 world = Conway::World.from_coordinate_list(coordinates)
 
-loop do
-  rows, columns = TermInfo.screen_size
-  display = Conway::AsciiDisplay.render(world, rows-1, columns-1)
+begin
+  loop do
+    rows, columns = TermInfo.screen_size
+    display = Conway::AsciiDisplay.render(world, rows-1, columns-1)
+    puts %x{clear}
+    puts display
+    world = world.tick
+  end
+rescue SystemExit, Interrupt
   puts %x{clear}
   puts display
-  world = world.tick
+  puts world.cells.map(&:location).sort.map(&:to_s).join("\n")
 end
 
 

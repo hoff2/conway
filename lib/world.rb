@@ -14,6 +14,8 @@ module Conway
       @cells = cells.uniq{ |cell| cell.location.to_array }
     end
 
+    attr_reader :cells
+
     def cell_count
       @cells.count
     end
@@ -92,7 +94,7 @@ module Conway
     end
 
     def to_s
-      "(#{@x}, #{@y})"
+      "#{@x},#{@y}"
     end
 
     # helper function for filtering out duplicate locations
@@ -114,6 +116,10 @@ module Conway
 
     def initialize(location)
       @location = location
+    end
+
+    def to_s
+      @location.to_s
     end
   end
 end
