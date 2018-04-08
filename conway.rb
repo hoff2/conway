@@ -10,6 +10,7 @@ ARGF.each_line do |line|
 end
 world = Conway::World.from_coordinate_list(coordinates)
 generation = 0
+count_log = []
 
 def display(world, rows, columns, generation)
   display = Conway::AsciiDisplay.render(world, rows, columns)
@@ -21,16 +22,21 @@ end
 rows, columns = TermInfo.screen_size
 begin
   loop do
-    # uncomment to allow resizing window
-    #rows, columns = TermInfo.screen_size
-    display(world, rows-2, columns-1, generation)
+    # allow resizing window
+    rows, columns = TermInfo.screen_size
+    display(world, rows-2, columns, count_log.count)
     sleep(0.1)
-    generation += 1
+    count_log << world.cell_count
     world = world.tick
   end
 rescue SystemExit, Interrupt
   display(world, rows-2, columns-1, generation)
+  puts "-" * columns
+  puts "cells at time interrupted:"
   puts world.cells.values.map(&:location).sort.map(&:to_s).join("\n")
+  puts "-" * columns
+  puts "log of cell count:"
+  puts count_log.each_with_index.map { |count, i| "#{i}: #{count}" }.join("\n")
 end
 
 
