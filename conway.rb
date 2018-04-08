@@ -30,7 +30,7 @@ begin
   end
 rescue SystemExit, Interrupt
   display(world, rows-2, columns-1, generation)
-  puts world.cells.map(&:location).sort.map(&:to_s).join("\n")
+  puts world.cells.values.map(&:location).sort.map(&:to_s).join("\n")
 end
 
 
