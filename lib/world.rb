@@ -23,7 +23,7 @@ module Conway
 
     def add_cell(cell)
       unless has_cell_at?(cell.location)
-        @cells[cell.location.to_array] = cell
+        @cells[cell.location] = cell
       end
       self
     end
@@ -34,7 +34,7 @@ module Conway
     end
 
     def has_cell_at?(location)
-      !@cells[location.to_array].nil?
+      !@cells[location].nil?
     end
 
     def neighborhood_of(loc)
@@ -59,7 +59,7 @@ module Conway
     def candidate_locations
       @cells.values.map{ |cell|
         neighborhood_of(cell.location) + [cell.location]
-      }.flatten.uniq{ |loc| loc.to_array }
+      }.flatten.uniq
     end
 
     def lives_next_tick?(location)
@@ -103,6 +103,14 @@ module Conway
     # and now also, to use as a hash key!
     def to_array
       [@x, @y]
+    end
+
+    def hash
+      to_array.hash
+    end
+
+    def eql?(other)
+      to_array == other.to_array
     end
   end
 
