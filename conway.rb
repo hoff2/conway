@@ -17,6 +17,7 @@ begin
     display = Conway::AsciiDisplay.render(world, rows-1, columns-1)
     puts %x{clear}
     puts display
+    sleep(0.1)
     world = world.tick
   end
 rescue SystemExit, Interrupt
