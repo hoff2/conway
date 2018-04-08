@@ -15,7 +15,7 @@ world = Conway::World.from_coordinate_list(
 loop do
   puts %x{clear}
   puts Conway::AsciiDisplay.render(world, 79, 39)
-  sleep(0.25)
+  sleep(0.1)
   world = world.tick
 end
 
