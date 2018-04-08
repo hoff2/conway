@@ -1,7 +1,7 @@
 module Conway
   class World
     def self.empty
-      self.new([])
+      self.new({})
     end
 
     def self.from_coordinate_list(coordinates)
@@ -11,7 +11,7 @@ module Conway
     end
 
     def initialize(cells)
-      @cells = []
+      @cells = {}
       add_cells(cells)
     end
 
@@ -23,7 +23,7 @@ module Conway
 
     def add_cell(cell)
       unless has_cell_at?(cell.location)
-        @cells << cell
+        @cells[cell.location.to_array] << cell
       end
       self
     end
@@ -34,7 +34,7 @@ module Conway
     end
 
     def has_cell_at?(location)
-      @cells.any?{ |cell| cell.location == location }
+      !@cells[location.to_array].nil?
     end
 
     def neighborhood_of(loc)
