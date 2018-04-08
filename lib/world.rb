@@ -98,9 +98,6 @@ module Conway
       "#{@x},#{@y}"
     end
 
-    # helper function for filtering out duplicate locations
-    # because Array#uniq doesn't use == :(
-    # and now also, to use as a hash key!
     def to_array
       [@x, @y]
     end
