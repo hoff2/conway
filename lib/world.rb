@@ -11,7 +11,8 @@ module Conway
     end
 
     def initialize(cells)
-      @cells = cells.uniq{ |cell| cell.location.to_array }
+      #@cells = cells.uniq{ |cell| cell.location.to_array }
+      add_cells(cells)
     end
 
     def cell_count
@@ -95,6 +96,7 @@ module Conway
       "(#{@x}, #{@y})"
     end
 
+    # helper function for filtering out duplicate locations
     def to_array
       [@x, @y]
     end
