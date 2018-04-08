@@ -15,7 +15,7 @@ def display(world, rows, columns, generation)
   display = Conway::AsciiDisplay.render(world, rows, columns)
   puts %x{clear}
   puts display
-  puts "generation #{generation}"
+  puts "generation: #{generation} cell count: #{world.cell_count}"
 end
 
 rows, columns = TermInfo.screen_size
