@@ -4,8 +4,14 @@ module Conway
       self.new([])
     end
 
+    def self.from_coordinate_list(coordinates)
+      empty.add_cells(coordinates.map{ |xy|
+        LiveCell.at(xy[0], xy[1])
+      })
+    end
+
     def initialize(cells)
-      @cells = cells
+      @cells = cells.uniq{ |cell| cell.location.to_array }
     end
 
     def cell_count
@@ -16,6 +22,12 @@ module Conway
       unless @cells.any?{ |c| c.location == cell.location }
         @cells << cell
       end
+      self
+    end
+
+    def add_cells(cells)
+      cells.each{ |cell| add_cell(cell) }
+      self
     end
 
     def has_cell_at?(location)
@@ -44,7 +56,7 @@ module Conway
     def candidate_locations
       @cells.map{ |cell|
         neighborhood_of(cell.location) + [cell.location]
-      }.flatten.uniq
+      }.flatten.uniq{ |loc| loc.to_array }
     end
 
     def lives_next_tick?(location)
@@ -58,7 +70,7 @@ module Conway
           lives_next_tick?(location)
       }.uniq
       cells = new_locations.map{ |location|
-        LiveCell.at(location)
+        LiveCell.at_location(location)
       }
       World.new(cells)
     end
@@ -75,8 +87,16 @@ module Conway
       @x == loc.x && @y == loc.y
     end
 
+    def <=>(loc)
+      [@x, @y] <=> [loc.x, loc.y]
+    end
+
     def to_s
       "(#{@x}, #{@y})"
+    end
+
+    def to_array
+      [@x, @y]
     end
   end
 
@@ -84,7 +104,11 @@ module Conway
     attr_reader :location
 
     def self.at(x, y)
-      new(Location.new(x,y))
+      at_location(Location.new(x,y))
+    end
+
+    def self.at_location(loc)
+      new(loc)
     end
 
     def initialize(location)

@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/spec'
+require 'awesome_print'
 
 require './lib/world.rb'
 
@@ -56,14 +57,32 @@ class TestWorld < Minitest::Test
   end
 
   def test_world_knows_candidate_locations
-    cell = LiveCell.at(0, 0)
-    @world.add_cell(cell)
-    candidates = @world.candidate_locations
-    expected = @world.neighborhood_of(cell.location) + [cell.location]
-    assert_equal(candidates, expected)
+    world = World.from_coordinate_list(
+      [ [0, -1],
+        [0, 0],
+        [0, 1]
+      ])
+    assert_equal(world.candidate_locations.count, 15)
   end
 
   def test_empty_world_stays_empty
     assert_equal(@world.tick.cell_count, 0)
+  end
+
+  def test_blinker
+    world = World.from_coordinate_list(
+      [ [0, -1],
+        [0, 0],
+        [0, 1]
+      ]).tick
+    refute(world.has_cell_at?(Location.new(-1, 1)))
+    refute(world.has_cell_at?(Location.new(0, 1)))
+    refute(world.has_cell_at?(Location.new(1, 1)))
+    assert(world.has_cell_at?(Location.new(-1, 0)))
+    assert(world.has_cell_at?(Location.new(0, 0)))
+    assert(world.has_cell_at?(Location.new(1, 0)))
+    refute(world.has_cell_at?(Location.new(-1, -1)))
+    refute(world.has_cell_at?(Location.new(0, -1)))
+    refute(world.has_cell_at?(Location.new(1, -1)))
   end
 end
