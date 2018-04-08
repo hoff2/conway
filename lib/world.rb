@@ -22,7 +22,7 @@ module Conway
     end
 
     def add_cell(cell)
-      unless @cells.any?{ |c| c.location == cell.location }
+      unless has_cell_at?(cell.location)
         @cells << cell
       end
       self
