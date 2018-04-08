@@ -11,7 +11,8 @@ module Conway
     end
 
     def initialize(cells)
-      @cells = cells.uniq{ |cell| cell.location.to_array }
+      @cells = []
+      add_cells(cells)
     end
 
     attr_reader :cells
