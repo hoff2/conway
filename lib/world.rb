@@ -53,7 +53,9 @@ module Conway
     end
 
     def count_neighbors_at(location)
-      neighborhood_of(location).select{ |loc| has_cell_at?(loc) }.count
+      neighborhood_of(location).select{ |loc|
+        has_cell_at?(loc)
+      }.count
     end
 
     def candidate_locations
