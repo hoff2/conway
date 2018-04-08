@@ -1,6 +1,6 @@
 module Conway
   module AsciiDisplay
-    def self.render(world, columns, rows)
+    def self.render(world, rows, columns)
       max_x = (columns / 2).floor
       min_x = max_x - columns + 1
       max_y = (rows / 2).floor
