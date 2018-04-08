@@ -4,9 +4,11 @@ require './lib/world.rb'
 require './lib/ascii_display.rb'
 
 world = Conway::World.from_coordinate_list(
-  [ [0, -1],
-    [0, 0],
-    [0, 1]
+  [ [0, 1],
+    [1, 0],
+    [-1, -1],
+    [0, -1],
+    [1, -1],
   ])
 
 
