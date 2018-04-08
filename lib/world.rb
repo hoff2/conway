@@ -11,8 +11,7 @@ module Conway
     end
 
     def initialize(cells)
-      #@cells = cells.uniq{ |cell| cell.location.to_array }
-      add_cells(cells)
+      @cells = cells.uniq{ |cell| cell.location.to_array }
     end
 
     def cell_count
