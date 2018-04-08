@@ -8,7 +8,7 @@ module Conway
       (min_y..max_y).map{ |y|
         (min_x..max_x).map{ |x|
           if world.has_cell_at?(Location.new(x, y))
-            'O'
+            '@'
           else
             ' '
           end
