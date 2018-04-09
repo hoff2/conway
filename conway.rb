@@ -32,7 +32,7 @@ rescue SystemExit, Interrupt
   display(world, rows-2, columns-1, count_log.count)
   puts "-" * columns
   puts "cells at time interrupted:"
-  puts world.cells.values.map(&:location).sort.map(&:to_s).join("\n")
+  puts world.cells.map(&:location).sort.map(&:to_s).join("\n")
   puts "-" * columns
   puts "log of cell count:"
   puts count_log.each_with_index.map { |count, i| "#{i}: #{count}" }.join("\n")
