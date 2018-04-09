@@ -9,7 +9,6 @@ ARGF.each_line do |line|
   coordinates << line.split(',').map(&:to_i)
 end
 world = Conway::World.from_coordinate_list(coordinates)
-generation = 0
 count_log = []
 
 def display(world, rows, columns, generation)
@@ -30,7 +29,7 @@ begin
     world = world.tick
   end
 rescue SystemExit, Interrupt
-  display(world, rows-2, columns-1, generation)
+  display(world, rows-2, columns-1, count_log.count)
   puts "-" * columns
   puts "cells at time interrupted:"
   puts world.cells.values.map(&:location).sort.map(&:to_s).join("\n")
