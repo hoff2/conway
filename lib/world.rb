@@ -11,19 +11,23 @@ module Conway
     end
 
     def initialize(cells)
-      @cells = {}
+      @cells_by_location = {}
       add_cells(cells)
     end
 
-    attr_reader :cells
+    attr_reader :cells_by_location
+
+    def cells
+      cells_by_location.values
+    end
 
     def cell_count
-      @cells.count
+      cells_by_location.count
     end
 
     def add_cell(cell)
       unless has_cell_at?(cell.location)
-        @cells[cell.location] = cell
+        cells_by_location[cell.location] = cell
       end
       self
     end
@@ -34,7 +38,7 @@ module Conway
     end
 
     def has_cell_at?(location)
-      !@cells[location].nil?
+      !cells_by_location[location].nil?
     end
 
     def neighborhood_of(loc)
@@ -59,7 +63,7 @@ module Conway
     end
 
     def candidate_locations
-      @cells.values.map{ |cell|
+      cells.map{ |cell|
         neighborhood_of(cell.location) + [cell.location]
       }.flatten.uniq
     end
@@ -71,12 +75,12 @@ module Conway
     end
 
     def tick
-      cells = candidate_locations.select{ |location|
+      new_cells = candidate_locations.select{ |location|
         lives_next_tick?(location)
       }.uniq.map{ |location|
         LiveCell.at_location(location)
       }
-      World.new(cells)
+      World.new(new_cells)
     end
   end
 
@@ -132,6 +136,3 @@ module Conway
     end
   end
 end
-
-
-
