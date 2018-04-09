@@ -1,7 +1,7 @@
 module Conway
   class World
     def self.empty
-      self.new({})
+      self.new([])
     end
 
     def self.from_coordinate_list(coordinates)
