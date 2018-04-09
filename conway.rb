@@ -18,7 +18,6 @@ def display(world, rows, columns, generation)
   puts "generation: #{generation} cell count: #{world.cell_count}"
 end
 
-rows, columns = TermInfo.screen_size
 begin
   loop do
     # allow resizing window
