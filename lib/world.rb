@@ -22,7 +22,7 @@ module Conway
     end
 
     def cell_count
-      cells_by_location.count
+      cells.count
     end
 
     def add_cell(cell)
