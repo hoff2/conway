@@ -71,10 +71,9 @@ module Conway
     end
 
     def tick
-      new_locations = candidate_locations.select{ |location|
-          lives_next_tick?(location)
-      }.uniq
-      cells = new_locations.map{ |location|
+      cells = candidate_locations.select{ |location|
+        lives_next_tick?(location)
+      }.uniq.map{ |location|
         LiveCell.at_location(location)
       }
       World.new(cells)
