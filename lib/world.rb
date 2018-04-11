@@ -1,11 +1,12 @@
 module Conway
+  # the current state of a Conway's Game Of Life
   class World
     def self.empty
-      self.new([])
+      new([])
     end
 
     def self.from_coordinate_list(coordinates)
-      empty.add_cells(coordinates.map{ |xy|
+      empty.add_cells(coordinates.map { |xy|
         LiveCell.at(xy[0], xy[1])
       })
     end
@@ -26,30 +27,30 @@ module Conway
     end
 
     def add_cell(cell)
-      unless has_cell_at?(cell.location)
+      unless cell_at?(cell.location)
         cells_by_location[cell.location] = cell
       end
       self
     end
 
     def add_cells(cells)
-      cells.each{ |cell| add_cell(cell) }
+      cells.each { |cell| add_cell(cell) }
       self
     end
 
-    def has_cell_at?(location)
+    def cell_at?(location)
       !cells_by_location[location].nil?
     end
 
     def neighborhood_of(loc)
-      [ Location.new(loc.x - 1, loc.y - 1),
-        Location.new(loc.x - 1, loc.y),
-        Location.new(loc.x - 1, loc.y + 1),
-        Location.new(loc.x, loc.y - 1),
-        Location.new(loc.x, loc.y + 1),
-        Location.new(loc.x + 1, loc.y - 1),
-        Location.new(loc.x + 1, loc.y),
-        Location.new(loc.x + 1, loc.y + 1) ]
+      [Location.new(loc.x - 1, loc.y - 1),
+       Location.new(loc.x - 1, loc.y),
+       Location.new(loc.x - 1, loc.y + 1),
+       Location.new(loc.x, loc.y - 1),
+       Location.new(loc.x, loc.y + 1),
+       Location.new(loc.x + 1, loc.y - 1),
+       Location.new(loc.x + 1, loc.y),
+       Location.new(loc.x + 1, loc.y + 1)]
     end
 
     def count_neighbors_of(cell)
@@ -57,33 +58,32 @@ module Conway
     end
 
     def count_neighbors_at(location)
-      neighborhood_of(location).select{ |loc|
-        has_cell_at?(loc)
-      }.count
+      neighborhood_of(location).select { |loc| cell_at?(loc) }.count
     end
 
     def candidate_locations
-      cells.map{ |cell|
+      cells.map { |cell|
         neighborhood_of(cell.location) + [cell.location]
       }.flatten.uniq
     end
 
     def lives_next_tick?(location)
-      ( has_cell_at?(location) &&
-        count_neighbors_at(location) == 2) ||
-      count_neighbors_at(location) == 3
+      (cell_at?(location) &&
+        count_neighbors_at(location) == 2
+      ) || count_neighbors_at(location) == 3
     end
 
     def tick
-      new_cells = candidate_locations.select{ |location|
+      new_cells = candidate_locations.select { |location|
         lives_next_tick?(location)
-      }.uniq.map{ |location|
+      }.uniq.map { |location|
         LiveCell.at_location(location)
       }
       World.new(new_cells)
     end
   end
 
+  # a location within the game grid
   class Location
     attr_reader :x, :y
 
@@ -91,12 +91,12 @@ module Conway
       @x, @y = x, y
     end
 
-    def ==(loc)
-      @x == loc.x && @y == loc.y
+    def ==(other)
+      @x == other.x && @y == other.y
     end
 
-    def <=>(loc)
-      [@x, @y] <=> [loc.x, loc.y]
+    def <=>(other)
+      [@x, @y] <=> [other.x, other.y]
     end
 
     def to_s
@@ -116,11 +116,12 @@ module Conway
     end
   end
 
+  # represents the fact that a live cell exists at a location
   class LiveCell
     attr_reader :location
 
     def self.at(x, y)
-      at_location(Location.new(x,y))
+      at_location(Location.new(x, y))
     end
 
     def self.at_location(loc)

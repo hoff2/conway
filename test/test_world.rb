@@ -20,9 +20,9 @@ class TestWorld < Minitest::Test
   end
 
   def test_world_can_be_queried
-    refute(@world.has_cell_at?(Location.new(0, 0)))
+    refute(@world.cell_at?(Location.new(0, 0)))
     @world.add_cell(LiveCell.at(0, 0))
-    assert(@world.has_cell_at?(Location.new(0, 0)))
+    assert(@world.cell_at?(Location.new(0, 0)))
   end
 
   def test_world_allows_only_one_cell_per_location
@@ -34,8 +34,8 @@ class TestWorld < Minitest::Test
   end
 
   def test_locations_can_be_compared
-    @loc1 = Location.new(0,0)
-    @loc2 = Location.new(0,0)
+    @loc1 = Location.new(0, 0)
+    @loc2 = Location.new(0, 0)
     assert_equal(@loc1, @loc2)
   end
 
@@ -55,10 +55,10 @@ class TestWorld < Minitest::Test
 
   def test_world_knows_candidate_locations
     world = World.from_coordinate_list(
-      [ [0, -1],
-        [0, 0],
-        [0, 1]
-      ])
+      [[0, -1],
+       [0, 0],
+       [0, 1]]
+    )
     assert_equal(world.candidate_locations.count, 15)
   end
 
@@ -68,18 +68,18 @@ class TestWorld < Minitest::Test
 
   def test_blinker
     world = World.from_coordinate_list(
-      [ [0, -1],
-        [0, 0],
-        [0, 1]
-      ]).tick
-    refute(world.has_cell_at?(Location.new(-1, 1)))
-    refute(world.has_cell_at?(Location.new(0, 1)))
-    refute(world.has_cell_at?(Location.new(1, 1)))
-    assert(world.has_cell_at?(Location.new(-1, 0)))
-    assert(world.has_cell_at?(Location.new(0, 0)))
-    assert(world.has_cell_at?(Location.new(1, 0)))
-    refute(world.has_cell_at?(Location.new(-1, -1)))
-    refute(world.has_cell_at?(Location.new(0, -1)))
-    refute(world.has_cell_at?(Location.new(1, -1)))
+      [[0, -1],
+       [0, 0],
+       [0, 1]]
+    ).tick
+    refute(world.cell_at?(Location.new(-1, 1)))
+    refute(world.cell_at?(Location.new(0, 1)))
+    refute(world.cell_at?(Location.new(1, 1)))
+    assert(world.cell_at?(Location.new(-1, 0)))
+    assert(world.cell_at?(Location.new(0, 0)))
+    assert(world.cell_at?(Location.new(1, 0)))
+    refute(world.cell_at?(Location.new(-1, -1)))
+    refute(world.cell_at?(Location.new(0, -1)))
+    refute(world.cell_at?(Location.new(1, -1)))
   end
 end

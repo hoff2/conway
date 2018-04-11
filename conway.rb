@@ -11,8 +11,8 @@ end
 
 def display(world, generation)
   rows, columns = TermInfo.screen_size
-  display = Conway::AsciiDisplay.render(world, rows-2, columns)
-  puts %x{clear}
+  display = Conway::AsciiDisplay.render(world, rows - 2, columns)
+  puts `%x(clear)`
   puts display
   puts "generation: #{generation} cell count: #{world.cell_count}"
 end
@@ -28,12 +28,10 @@ begin
   end
 rescue SystemExit, Interrupt
   display(world, count_log.count)
-  puts "---"
-  puts "cells at time interrupted:"
+  puts '---'
+  puts 'cells at time interrupted:'
   puts world.cells.map(&:location).sort.map(&:to_s).join("\n")
-  puts "---"
-  puts "log of cell count:"
+  puts '---'
+  puts 'log of cell count:'
   puts count_log.each_with_index.map { |count, i| "#{i}: #{count}" }.join("\n")
 end
-
-
