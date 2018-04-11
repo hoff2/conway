@@ -12,13 +12,13 @@ world = Conway::World.from_coordinate_list(coordinates)
 count_log = []
 begin
   loop do
-    Conway::AsciiDisplay.display(world, count_log.count)
+    Conway::Terminal.display(world, count_log.count)
     sleep(0.1)
     count_log << world.cell_count
     world = world.tick
   end
 rescue SystemExit, Interrupt
-  Conway::AsciiDisplay.display(world, count_log.count)
+  Conway::Terminal.display(world, count_log.count)
   puts '---'
   puts 'cells at time interrupted:'
   puts world.cells.map(&:location).sort.map(&:to_s).join("\n")

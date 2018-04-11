@@ -18,7 +18,10 @@ module Conway
         }.join
       }.join("\n")
     end
+  end
 
+  # display the AsciiDisplay results on the terminal
+  module Terminal
     def self.display(world, generation)
       rows, columns = TermInfo.screen_size
       rendered = Conway::AsciiDisplay.render(world, rows - 2, columns)
