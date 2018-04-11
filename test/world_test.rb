@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require './lib/world.rb'
 
-class TestWorld < Minitest::Test
+class WorldTest < Minitest::Test
 
   include Conway
 
