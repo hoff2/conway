@@ -1,3 +1,5 @@
+require 'terminfo'
+
 module Conway
   # turn a Conway::World into a string suitable for displaying on terminal
   module AsciiDisplay
@@ -15,6 +17,14 @@ module Conway
           end
         }.join
       }.join("\n")
+    end
+
+    def self.display(world, generation)
+      rows, columns = TermInfo.screen_size
+      rendered = Conway::AsciiDisplay.render(world, rows - 2, columns)
+      puts `%x(clear)`
+      puts rendered
+      puts "generation: #{generation} cell count: #{world.cell_count}"
     end
   end
 end
