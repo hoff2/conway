@@ -55,9 +55,7 @@ class WorldTest < Minitest::Test
 
   def test_world_knows_candidate_locations
     world = World.from_coordinate_list(
-      [[0, -1],
-       [0, 0],
-       [0, 1]]
+      [[0, -1], [0, 0], [0, 1]]
     )
     assert_equal(world.candidate_locations.count, 15)
   end
@@ -68,9 +66,7 @@ class WorldTest < Minitest::Test
 
   def test_blinker
     world = World.from_coordinate_list(
-      [[0, -1],
-       [0, 0],
-       [0, 1]]
+      [[0, -1], [0, 0], [0, 1]]
     ).tick
     refute(world.cell_at?(Location.new(-1, 1)))
     refute(world.cell_at?(Location.new(0, 1)))
