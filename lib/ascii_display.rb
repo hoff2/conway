@@ -22,7 +22,7 @@ module Conway
     def self.display(world, generation)
       rows, columns = TermInfo.screen_size
       rendered = Conway::AsciiDisplay.render(world, rows - 2, columns)
-      puts `%x(clear)`
+      puts `clear`
       puts rendered
       puts "generation: #{generation} cell count: #{world.cell_count}"
     end
